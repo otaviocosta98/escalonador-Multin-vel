@@ -1,5 +1,6 @@
 package usjt.esc.memoria;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.usjt.model.Processo;
@@ -10,6 +11,7 @@ public class Memoria {
 
 	private Integer tamanho;
 	private List<Particao> particoes;
+	private List<Processo> reservas;
 
 	public Memoria() {
 	}
@@ -17,6 +19,7 @@ public class Memoria {
 	public Memoria(Integer tamanho, List<Particao> particoes) {
 		this.tamanho = tamanho;
 		this.particoes = particoes;
+		reservas = new ArrayList<>();
 	}
 
 	public Integer getTamanho() {
@@ -33,6 +36,18 @@ public class Memoria {
 
 	public void setParticoes(List<Particao> particoes) {
 		this.particoes = particoes;
+	}
+	
+	public void addReservas(Processo p ) {
+		this.reservas.add(p);
+	}
+	
+	public List<Processo> getReservas() {
+		return reservas;
+	}
+
+	public void setReservas(List<Processo> reservas) {
+		this.reservas = reservas;
 	}
 
 	// metodos de alocamento de processo no worstfit
@@ -62,6 +77,8 @@ public class Memoria {
 
 						} else {
 							deuErroReserva();
+							this.addReservas(p);
+
 						}
 
 					} else if ((this.particoes.get(1).getTamanhoAtual()
@@ -81,6 +98,8 @@ public class Memoria {
 
 						} else {
 							deuErroReserva();
+							this.addReservas(p);
+
 						}
 					} else if ((this.particoes.get(2).getTamanhoAtual()
 							- p.getTempo() > this.particoes.get(1).getTamanhoAtual() - p.getTempo())
@@ -100,6 +119,8 @@ public class Memoria {
 
 						} else {
 							deuErroReserva();
+							this.addReservas(p);
+
 						}
 
 					} else if ((this.particoes.get(3).getTamanhoAtual()
@@ -120,6 +141,7 @@ public class Memoria {
 
 						} else {
 							deuErroReserva();
+							this.addReservas(p);
 						}
 
 					} else {
@@ -129,7 +151,6 @@ public class Memoria {
 				}
 			}
 		}
-
 	}
 
 	private static void deuErro() {
